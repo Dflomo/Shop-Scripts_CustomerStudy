@@ -5,15 +5,15 @@ function myFunction() {
   var custID;
   var messID;
   var messDate;
-  var emailDerek = "derek.florimonte@workshopcafe.com";
-  var emailLaone = "laone.oagile@workshopcafe.com";
-  var emailRich = "rich.menendez@workshopcafe.com";
+  var email1 = "";
+  var email2 = "";
+  var email3 = "";
   var newDate = new Date();
   
   var tomorrow = new Date(newDate.getTime() + (24 * 60 * 60 * 1000));
   var tomorrowStr = tomorrow.toDateString() + "\n"; 
   
-  var countSSURL = "https://docs.google.com/a/workshopcafe.com/spreadsheets/d/1TH5c3tZWkfZnH-EpP1d0Sth3fl-u5Ik31cTdmwhXajs/edit?usp=sharing";
+  var countSSURL = "";
   var countSS = SpreadsheetApp.openByUrl(countSSURL);
   var ssSheet = countSS.getSheets()[countSS.getSheets().length -1];
   var ssTemplate = countSS.getSheetByName("Template");
@@ -56,10 +56,10 @@ function myFunction() {
           
           //IF - Checks to see if the same Thread has 3 messages within it
           if(inboxThreads[each].getMessageCount() == 3){
-            MailApp.sendEmail(emailDerek, "Found a Reoccuring Customer Thread! (" + custID + ")", 
+            MailApp.sendEmail(email1, "Found a Reoccuring Customer Thread! (" + custID + ")", 
                               "Found Customer " + custID + " with mutiple warnings! Lets check it out! :: " +
                               messSub + "\n\n https://app.workshopcafe.com/admin/customers/" + custID,
-                              {cc: "laone.oagile@workshopcafe.com, rich.menendez@workshopcafe.com, heather.tom@workshopcafe.com, kevin.walls@workshopcafe.com, grace.lopez@workshopcafe.com"});
+                              {cc: ""});
             ssSheet.appendRow([custID, threadID, messSub, messDate, "FiDi"]);
           }
         }
@@ -89,16 +89,16 @@ function myFunction() {
     var newPropSet = {endRange: tempEndRange, tenTime: tempTenTime, sixTime: tempSixTime, startRange: tempStartRange};
     scriptProperties.setProperties(newPropSet, true);
     
-    MailApp.sendEmail(emailDerek, "Going to Sleep!(Customer ID Study)", "The Customer ID Study has sensed that it is roughly 10:00 - 10:05pm! Time to shut 'er down captain!");
-//    MailApp.sendEmail(emailLaone, "Going to Sleep!(20 Min Counter)", "The 20 Min Script has sensed that it is roughly 10:00 - 10:05pm! Time to shut 'er down captain!");
+    MailApp.sendEmail(email1, "Going to Sleep!(Customer ID Study)", "The Customer ID Study has sensed that it is roughly 10:00 - 10:05pm! Time to shut 'er down captain!");
+
     
     countSS.insertSheet(tomorrowStr, countSS.getNumSheets(), {template: ssTemplate});
 
   }
   else if(newDate >= startRange && newDate < sixTime){
 //    Logger.log("Got to 5:55am - 6:00am\n");    
-    MailApp.sendEmail(emailDerek, "Waking Up!(Customer ID Study)", "The Customer ID Study has sensed that it is roughly 5:55am - 6:00am! Yar! There be sun on the horizon!");
-//    MailApp.sendEmail(emailLaone, "Waking Up!(20 Min Counter)", "The 20 Min Script has sensed that it is roughly 5:55am - 6:00am! Yar! There be sun on the horizon!");
+    MailApp.sendEmail(email1, "Waking Up!(Customer ID Study)", "The Customer ID Study has sensed that it is roughly 5:55am - 6:00am! Yar! There be sun on the horizon!");
+
   }
   else if(newDate > endRange && newDate < startRange){ Logger.log("Currently Sleeping\n"); }
   
